@@ -4,7 +4,7 @@ import { ZodValidationProduct } from "./product.zod.validation";
 
 const createProduct = async (req: Request, res: Response) => {
     try {
-        const product = req.body.product;
+        const product = req.body;
 
         const zodParseData = ZodValidationProduct.parse(product);
 
@@ -44,7 +44,7 @@ const getAllProducts = async (req: Request, res: Response) => {
 
 const getAProduct = async (req: Request, res: Response) => {
     try {
-        const id = req.params.id;
+        const id = req.params.productId;
         const result = await ProductService.getAProductFromDB(id);
 
         res.status(200).json({
@@ -61,8 +61,29 @@ const getAProduct = async (req: Request, res: Response) => {
     }
 }
 
+const updateAProduct = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.productId;
+        const body = req.body;
+        const result = await ProductService.updateProductFromDB(id, body);
+
+        res.status(200).json({
+            success: true,
+            message: "Product updated successfully!",
+            data: result
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Sorry!! could not updated.",
+            data: error
+        });
+    }
+}
+
 export const ProductControllers = {
     createProduct,
     getAllProducts,
-    getAProduct
+    getAProduct,
+    updateAProduct
 }

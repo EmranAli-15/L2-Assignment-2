@@ -1,4 +1,4 @@
-import { ProductModel } from "../product.model";
+import { ProductModel } from "./product.model";
 import { Product } from "./product.interface";
 
 const createProductIntoDB = async (product: Product) => {
@@ -16,10 +16,18 @@ const getAProductFromDB = async (id: string) => {
     return result;
 }
 
-
+const updateProductFromDB = async (id: string, body: object) => {
+    const result = await ProductModel.findByIdAndUpdate(id, body, {
+        new: true,
+        runValidators: true,
+        overwrite: true,
+    });
+    return result;
+}
 
 export const ProductService = {
     createProductIntoDB,
     getAllProductsFromDB,
-    getAProductFromDB
+    getAProductFromDB,
+    updateProductFromDB
 }
