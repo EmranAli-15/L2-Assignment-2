@@ -6,7 +6,7 @@ const variantSchema = z.object({
 });
 
 const inventorySchema = z.object({
-    quantity: z.number().max(10, {message: 'maximum length is 10 digit'}),
+    quantity: z.number(),
     inStock: z.boolean({message: 'inStock should be "true" or "false"'})
 });
 
