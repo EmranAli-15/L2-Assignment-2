@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import { ProductService } from "./product.service";
+import { ZodValidationProduct } from "./product.zod.validation";
 
 const createProduct = async (req: Request, res: Response) => {
     try {
         const product = req.body.product;
-        console.log(product);
-        const result = await ProductService.createProductIntoDB(product);
+
+        const zodParseData = ZodValidationProduct.parse(product);
+
+        const result = await ProductService.createProductIntoDB(zodParseData);
 
         res.status(200).json({
             success: true,
@@ -13,12 +16,11 @@ const createProduct = async (req: Request, res: Response) => {
             data: result
         });
     } catch (error) {
-        // res.status(200).json({
-        //     success: false,
-        //     message: "!!Something went wrong!!",
-        //     data: error
-        // });
-        console.log(error);
+        res.status(200).json({
+            success: false,
+            message: "!!Something went wrong!!",
+            data: error
+        });
     }
 };
 
