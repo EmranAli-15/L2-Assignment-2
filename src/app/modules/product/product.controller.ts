@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ProductService } from "./product.service";
 import { ZodValidationProduct } from "./product.zod.validation";
+import { string } from "zod";
 
 const createProduct = async (req: Request, res: Response) => {
     try {
@@ -26,13 +27,28 @@ const createProduct = async (req: Request, res: Response) => {
 
 const getAllProducts = async (req: Request, res: Response) => {
     try {
-        const result = await ProductService.getAllProductsFromDB();
+        const searchTerm = req.query.searchTerm;
 
-        res.status(200).json({
-            success: true,
-            message: "You got all products successfully",
-            data: result
-        });
+        if (searchTerm) {
+            const search = req.query.searchTerm;
+            const result = await ProductService.searchProductsFromDB(search);
+
+            res.status(200).json({
+                success: true,
+                message: "Products matching search term 'iphone' fetched successfully!",
+                data: result
+            });
+        }
+
+        else {
+            const result = await ProductService.getAllProductsFromDB();
+
+            res.status(200).json({
+                success: true,
+                message: "You got all products successfully",
+                data: result
+            });
+        }
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -98,12 +114,14 @@ const deleteAProduct = async (req: Request, res: Response) => {
             data: error
         });
     }
-}
+};
+
+
 
 export const ProductControllers = {
     createProduct,
     getAllProducts,
     getAProduct,
     updateAProduct,
-    deleteAProduct
+    deleteAProduct,
 }

@@ -30,10 +30,23 @@ const deleteAProductFromDB = async (id: string) => {
     return result;
 }
 
+const searchProductsFromDB = async (searchTerm: any) => {
+    const result = await ProductModel.find({
+        $or: [
+            { name: new RegExp(searchTerm, 'i') },
+            { description: new RegExp(searchTerm, 'i') },
+            { category: new RegExp(searchTerm, 'i') },
+            { tags: new RegExp(searchTerm, 'i') }
+        ]
+    });
+    return result;
+}
+
 export const ProductService = {
     createProductIntoDB,
     getAllProductsFromDB,
     getAProductFromDB,
     updateProductFromDB,
-    deleteAProductFromDB
+    deleteAProductFromDB,
+    searchProductsFromDB
 }
