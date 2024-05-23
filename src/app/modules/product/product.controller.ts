@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { ProductService } from "./product.service";
 import { ZodValidationProduct } from "./product.zod.validation";
-import { string } from "zod";
 
 const createProduct = async (req: Request, res: Response) => {
     try {
