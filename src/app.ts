@@ -12,7 +12,8 @@ app.use('/api/products', ProductRouter);
 app.use('/api/orders', OrderRouter);
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World!')
+    res.status(200).json({})
+    // res.send('Hello World!')
 })
 
 export default app;
