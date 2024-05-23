@@ -2,12 +2,10 @@ import { Request, Response } from "express";
 import { ZodValidationOrder } from "./order.zod.validation";
 import { OrderService } from "./order.service";
 
-const createProduct = async (req: Request, res: Response) => {
+const createOrder = async (req: Request, res: Response) => {
     try {
         const order = req.body;
-
         const zodParseData = ZodValidationOrder.parse(order);
-
         const result = await OrderService.createOrderIntoDB(zodParseData);
 
         res.status(200).json({
@@ -57,6 +55,6 @@ const getAllOrder = async (req: Request, res: Response) => {
 
 
 export const OrderController = {
-    createProduct,
+    createOrder,
     getAllOrder
 }

@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderController = void 0;
 const order_zod_validation_1 = require("./order.zod.validation");
 const order_service_1 = require("./order.service");
-const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const order = req.body;
         const zodParseData = order_zod_validation_1.ZodValidationOrder.parse(order);
@@ -60,6 +60,6 @@ const getAllOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.OrderController = {
-    createProduct,
+    createOrder,
     getAllOrder
 };
