@@ -12,8 +12,7 @@ app.use('/api/products', ProductRouter);
 app.use('/api/orders', OrderRouter);
 
 app.get('/', (req: Request, res: Response) => {
-    res.status(200).json({})
-    // res.send('Hello World!')
+    res.send("It's working properly");
 })
 
 export default app;
